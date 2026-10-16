@@ -1,0 +1,106 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Download, Share, SquarePlus } from "lucide-react";
+import { Sheet } from "@/components/ui/Sheet";
+import { cn } from "@/lib/utils";
+
+type BIPEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
+
+let deferred: BIPEvent | null = null;
+const listeners = new Set<() => void>();
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferred = e as BIPEvent;
+    listeners.forEach((l) => l());
+  });
+}
+
+function isStandalone() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (navigator as Navigator & { standalone?: boolean }).standalone === true
+  );
+}
+
+function isIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
+export function InstallButton({ variant = "pill" }: { variant?: "pill" | "card" }) {
+  const [canPrompt, setCanPrompt] = useState(false);
+  const [ios, setIos] = useState(false);
+  const [hidden, setHidden] = useState(true);
+  const [help, setHelp] = useState(false);
+
+  useEffect(() => {
+    const sync = () => setCanPrompt(Boolean(deferred));
+    listeners.add(sync);
+    const t = setTimeout(() => {
+      sync();
+      setIos(isIOS());
+      setHidden(isStandalone());
+    }, 0);
+    return () => {
+      clearTimeout(t);
+      listeners.delete(sync);
+    };
+  }, []);
+
+  if (hidden || (!canPrompt && !ios)) return null;
+
+  async function onClick() {
+    if (deferred) {
+      await deferred.prompt();
+      await deferred.userChoice.catch(() => null);
+      deferred = null;
+      setCanPrompt(false);
+    } else {
+      setHelp(true);
+    }
+  }
+
+  return (
+    <>
+      {variant === "pill" ? (
+        <button
+          onClick={onClick}
+          className="flex h-10 items-center gap-1.5 rounded-full bg-saffron px-4 text-sm font-bold text-black hover:brightness-110"
+        >
+          <Download size={18} /> <span className="hidden sm:inline">App download rawh</span>
+          <span className="sm:hidden">App</span>
+        </button>
+      ) : (
+        <button
+          onClick={onClick}
+          className={cn(
+            "flex w-full items-center gap-4 rounded-3xl border border-saffron/30 bg-gradient-to-r from-saffron/20 to-transparent p-4 text-left",
+          )}
+        >
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-saffron text-black">
+            <Download size={24} />
+          </span>
+          <span>
+            <span className="block font-display text-lg font-bold">App download rawh</span>
+            <span className="block text-sm text-muted">Phone home screen-ah dah la, app angin hmang rawh</span>
+          </span>
+        </button>
+      )}
+      <Sheet open={help} onClose={() => setHelp(false)} label="iPhone-ah install dan">
+        <div className="p-6 pt-10">
+          <h2 className="font-display text-2xl font-bold">iPhone-ah dah dan</h2>
+          <ol className="mt-5 space-y-4 text-lg">
+            <li className="flex items-center gap-3">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-surface-2"><Share /></span>
+              Safari hnuai lama <b>Share</b> button hmet rawh
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-surface-2"><SquarePlus /></span>
+              <b>Add to Home Screen</b> hmet rawh
+            </li>
+          </ol>
+        </div>
+      </Sheet>
+    </>
+  );
+}

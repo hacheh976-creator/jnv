@@ -1,26 +1,174 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/baloo-2/wght.css";
 
+/* ---------- design tokens (from the JNV logo colours) ---------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0b12;
+  --surface: #15151f;
+  --surface-2: #1f1f2e;
+  --line: #2a2a3c;
+  --text: #f5f5f7;
+  --muted: #a1a1b5;
+  --saffron: #f7931e;
+  --green: #2ea043;
+  --blue: #3b82f6;
+  --red: #e5484d;
+  --yellow: #facc15;
+  --tabbar-h: 64px;
+  --player-h: 0px;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-saffron: var(--saffron);
+  --color-green: var(--green);
+  --color-blue: var(--blue);
+  --color-red: var(--red);
+  --color-yellow: var(--yellow);
+  --font-sans: "Inter Variable", "Baloo 2 Variable", system-ui, sans-serif;
+  --font-display: "Baloo 2 Variable", "Inter Variable", system-ui, sans-serif;
+  --radius-card: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.brand-gradient {
+  background-image: linear-gradient(100deg, var(--saffron), var(--red) 50%, var(--blue));
+}
+.brand-text {
+  background-image: linear-gradient(100deg, #ffb347, var(--saffron) 30%, #ff6b6b 65%, #6aa7ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* focus ring for keyboard users (in the base layer so outline-none can override) */
+@layer base {
+  :focus-visible {
+    outline: 3px solid var(--saffron);
+    outline-offset: 2px;
+  }
+}
+
+/* hide scrollbars on horizontal rows but keep scrolling */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- game mosaic (home hero) ---------- */
+@keyframes mosaic-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes mosaic-drift-rev {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.mosaic-row {
+  display: flex;
+  width: max-content;
+  animation: mosaic-drift var(--speed, 60s) linear infinite;
+  will-change: transform;
+}
+.mosaic-row.rev {
+  animation-name: mosaic-drift-rev;
+}
+.mosaic:hover .mosaic-row,
+.mosaic:active .mosaic-row {
+  animation-play-state: paused;
+}
+
+/* sheet + dialog motion */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@utility anim-sheet { animation: sheet-up 260ms cubic-bezier(0.2, 0.9, 0.3, 1); }
+@utility anim-fade { animation: fade-in 200ms ease-out; }
+@utility anim-pop { animation: pop-in 220ms cubic-bezier(0.2, 0.9, 0.3, 1); }
+
+/* equalizer bars for the playing track */
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.eq span {
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  margin: 0 1px;
+  border-radius: 2px;
+  background: var(--saffron);
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite;
+}
+.eq span:nth-child(2) { animation-delay: -0.3s; }
+.eq span:nth-child(3) { animation-delay: -0.6s; }
+.eq.paused span { animation-play-state: paused; }
+
+/* range input (seek bar) */
+input[type="range"].seek {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--saffron) var(--pct, 0%), var(--surface-2) var(--pct, 0%));
+}
+input[type="range"].seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+}
+input[type="range"].seek::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .mosaic-row { animation: none; }
 }
