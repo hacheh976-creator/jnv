@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "jnv-studio",
+  "name": "jnv-thenzawl",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
@@ -9,7 +9,7 @@
     "binding": "ASSETS"
   },
   "services": [
-    { "binding": "WORKER_SELF_REFERENCE", "service": "jnv-studio" }
+    { "binding": "WORKER_SELF_REFERENCE", "service": "jnv-thenzawl" }
   ],
   "observability": { "enabled": true },
   // keep the variables/secrets you set in the Cloudflare dashboard on every deploy
