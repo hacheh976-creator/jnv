@@ -15,10 +15,18 @@ export function Header({ schoolName }: { schoolName: string }) {
 
   useEffect(() => {
     let last = window.scrollY;
+    let ticking = false;
     const onScroll = () => {
-      const y = window.scrollY;
-      setHidden(y > 80 && y > last);
-      last = y;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const y = window.scrollY;
+          const shouldHide = y > 80 && y > last;
+          setHidden((prev) => (prev !== shouldHide ? shouldHide : prev));
+          last = y;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -40,7 +48,7 @@ export function Header({ schoolName }: { schoolName: string }) {
     <>
       <header
         className={cn(
-          "sticky top-0 z-40 border-b border-white/5 bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur-xl transition-transform duration-300",
+          "sticky top-0 z-40 border-b border-white/5 bg-bg/92 pt-[env(safe-area-inset-top)] backdrop-blur-md transition-transform duration-300 will-change-transform",
           hidden && "-translate-y-full",
         )}
       >

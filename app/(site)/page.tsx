@@ -32,23 +32,23 @@ export default async function Home() {
       <section className="relative isolate flex min-h-[min(78svh,620px)] items-center justify-center overflow-hidden">
         <Mosaic games={mosaic} />
         <div className="pointer-events-none relative z-10 px-6 py-16 text-center">
-          <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] sm:text-7xl">
+          <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] sm:text-7xl">
             JNV <span className="brand-text">Studio</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-md text-base font-medium text-white/85 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] sm:text-lg">
+          <p className="mx-auto mt-3 max-w-md text-base font-medium text-white/85 drop-shadow sm:text-lg">
             {settings.tagline}
           </p>
           <p className="mt-1 text-sm text-white/60 drop-shadow">{settings.school_name}</p>
           <div className="pointer-events-auto mt-7 flex flex-wrap justify-center gap-3">
             <Link
               href="/games"
-              className="flex h-14 items-center gap-2 rounded-full bg-saffron px-7 text-lg font-extrabold text-black shadow-[0_10px_40px_-8px_var(--saffron)] transition hover:brightness-110 active:scale-95"
+              className="flex h-14 items-center gap-2 rounded-full bg-saffron px-7 text-lg font-extrabold text-black shadow-[0_10px_30px_-8px_var(--saffron)] transition hover:brightness-110 active:scale-95"
             >
               <Gamepad2 size={22} /> Game khel rawh
             </Link>
             <Link
               href="/music"
-              className="flex h-14 items-center gap-2 rounded-full bg-white/10 px-7 text-lg font-bold ring-1 ring-white/20 backdrop-blur-md transition hover:bg-white/20 active:scale-95"
+              className="flex h-14 items-center gap-2 rounded-full bg-surface-2/90 px-7 text-lg font-bold ring-1 ring-white/20 transition hover:bg-surface-2 active:scale-95"
             >
               <Music2 size={22} /> Hla ngaithla rawh
             </Link>

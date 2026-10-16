@@ -20,7 +20,7 @@ export function CardFace({ game, tilt = 0, priority, size = "md" }: { game: Game
           priority={priority}
         />
         {game.class && (
-          <span className="absolute right-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-bold text-white backdrop-blur">
+          <span className="absolute right-2 top-2 rounded-full border border-white/10 bg-black/85 px-2 py-0.5 text-[11px] font-bold text-white">
             Cl. {game.class}
           </span>
         )}
