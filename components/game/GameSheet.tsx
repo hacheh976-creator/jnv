@@ -8,11 +8,13 @@ import { Cover } from "@/components/ui/Cover";
 import { likeGame } from "@/lib/actions/public";
 import { hasLiked, rememberLike } from "@/lib/likes";
 import { byline, formatCount } from "@/lib/utils";
+import { useTranslation } from "@/lib/i18n";
 
 export function GameSheet({ categories }: { categories: Record<string, string> }) {
   const { game, close } = useGameSheet();
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const onPop = () => close({ fromPop: true });
@@ -79,35 +81,55 @@ export function GameSheet({ categories }: { categories: Record<string, string> }
           <div className="mt-4 flex gap-6 text-sm">
             <span>
               <b className="block text-lg">{formatCount(game.plays)}</b>
-              <span className="text-muted">Khelh zat</span>
+              <span className="text-muted">{t("playsCount", "Plays")}</span>
             </span>
             <span>
               <b className="block text-lg">{formatCount(likes)}</b>
-              <span className="text-muted">Duh zat</span>
+              <span className="text-muted">{t("likesCount", "Likes")}</span>
             </span>
           </div>
 
-          {game.description && <p className="mt-4 whitespace-pre-line text-[15px] text-text/85">{game.description}</p>}
+          {/* Game Instructions & Controls Guide */}
+          <div className="mt-5 rounded-2xl border border-white/10 bg-surface-2/60 p-4">
+            <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-saffron">
+              <span>🎮</span> {t("howToPlay", "How to Play & Controls")}
+            </h3>
+            {game.description && (
+              <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-text/90">
+                {game.description}
+              </p>
+            )}
+            <div className="mt-3 grid grid-cols-1 gap-2 pt-2 border-t border-white/5 text-xs text-muted sm:grid-cols-2">
+              <div className="flex items-start gap-1.5">
+                <span className="text-sm">💻</span>
+                <span>{t("desktopControlsTip", "PC: Arrow Keys / WASD, Space to jump")}</span>
+              </div>
+              <div className="flex items-start gap-1.5">
+                <span className="text-sm">📱</span>
+                <span>{t("mobileControlsTip", "Mobile: Landscape mode + on-screen buttons")}</span>
+              </div>
+            </div>
+          </div>
 
           <div className="mt-6 flex items-center gap-3">
             <Link
               href={`/play/${game.slug}`}
-              className="flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-saffron text-xl font-extrabold text-black shadow-[0_8px_30px_-6px_var(--saffron)] transition hover:brightness-110 active:scale-[0.98]"
+              className="flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-saffron text-xl font-extrabold text-black shadow-[0_8px_30px_-6px_var(--saffron)] transition-transform duration-75 hover:brightness-110 active:scale-[0.97] touch-manipulation"
             >
-              <Play size={24} fill="currentColor" /> PLAY
+              <Play size={24} fill="currentColor" /> {t("play", "PLAY")}
             </Link>
             <button
               onClick={onLike}
-              aria-label="Ka duh"
+              aria-label={t("like", "Like")}
               aria-pressed={liked}
-              className="grid h-14 w-14 place-items-center rounded-full bg-surface-2 transition active:scale-90"
+              className="grid h-14 w-14 place-items-center rounded-full bg-surface-2 transition-transform duration-75 active:scale-90 touch-manipulation"
             >
               <Heart size={24} className={liked ? "fill-red text-red" : ""} />
             </button>
             <button
               onClick={onShare}
-              aria-label="Share"
-              className="grid h-14 w-14 place-items-center rounded-full bg-surface-2 transition active:scale-90"
+              aria-label={t("share", "Share")}
+              className="grid h-14 w-14 place-items-center rounded-full bg-surface-2 transition-transform duration-75 active:scale-90 touch-manipulation"
             >
               <Share2 size={22} />
             </button>

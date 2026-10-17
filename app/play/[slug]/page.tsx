@@ -20,5 +20,15 @@ export default async function PlayPage({ params }: PageProps<"/play/[slug]">) {
   const { slug } = await params;
   const game = await getGameBySlug(slug);
   if (!game) notFound();
-  return <PlayFrame id={game.id} slug={game.slug} title={game.title} accent={game.accent_color} />;
+  return (
+    <PlayFrame
+      id={game.id}
+      slug={game.slug}
+      title={game.title}
+      accent={game.accent_color}
+      description={game.description}
+      creators={game.creators}
+      cls={game.class}
+    />
+  );
 }

@@ -1,10 +1,10 @@
-import Link from "next/link";
-import { Flame, Gamepad2, Music2, Sparkles } from "lucide-react";
+import { Flame, Music2, Sparkles } from "lucide-react";
 import { Mosaic } from "@/components/game/Mosaic";
 import { GameCard } from "@/components/game/GameCard";
 import { AlbumCard } from "@/components/music/AlbumCard";
 import { TrackList } from "@/components/music/TrackList";
 import { InstallButton } from "@/components/site/InstallButton";
+import { HeroButtons } from "@/components/site/HeroButtons";
 import { DemoBanner, Section } from "@/components/site/Section";
 import {
   getAlbumTrackCounts,
@@ -39,20 +39,7 @@ export default async function Home() {
             {settings.tagline}
           </p>
           <p className="mt-1 text-sm text-white/60 drop-shadow">{settings.school_name}</p>
-          <div className="pointer-events-auto mt-7 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/games"
-              className="flex h-14 items-center gap-2 rounded-full bg-saffron px-7 text-lg font-extrabold text-black shadow-[0_10px_30px_-8px_var(--saffron)] transition hover:brightness-110 active:scale-95"
-            >
-              <Gamepad2 size={22} /> Game khel rawh
-            </Link>
-            <Link
-              href="/music"
-              className="flex h-14 items-center gap-2 rounded-full bg-surface-2/90 px-7 text-lg font-bold ring-1 ring-white/20 transition hover:bg-surface-2 active:scale-95"
-            >
-              <Music2 size={22} /> Hla ngaithla rawh
-            </Link>
-          </div>
+          <HeroButtons />
         </div>
       </section>
 
@@ -62,17 +49,17 @@ export default async function Home() {
         <InstallButton variant="card" />
       </div>
 
-      <Section title="Game thar" href="/games" icon={<Sparkles className="text-yellow" size={24} />}>
+      <Section title="Game thar" titleKey="newGames" href="/games" icon={<Sparkles className="text-yellow" size={24} />}>
         <GameRow games={newest} />
       </Section>
 
       {popular.length > 3 && (
-        <Section title="A lar ber" href="/games" icon={<Flame className="text-red" size={24} />}>
+        <Section title="A lar ber" titleKey="popularGames" href="/games" icon={<Flame className="text-red" size={24} />}>
           <GameRow games={popular} />
         </Section>
       )}
 
-      <Section title="Hla" href="/music" icon={<Music2 className="text-blue" size={24} />}>
+      <Section title="Hla" titleKey="albums" href="/music" icon={<Music2 className="text-blue" size={24} />}>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {albums.map((a) => (
             <AlbumCard key={a.id} album={a} count={counts[a.id] ?? 0} big />
@@ -81,7 +68,7 @@ export default async function Home() {
       </Section>
 
       {tracks.length > 0 && (
-        <Section title="Hla thar">
+        <Section title="Hla thar" titleKey="newTracks">
           <TrackList tracks={tracks} />
         </Section>
       )}

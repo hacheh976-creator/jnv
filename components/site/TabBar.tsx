@@ -4,15 +4,18 @@ import { usePathname } from "next/navigation";
 import { NAV, isActive } from "./nav";
 import { cn } from "@/lib/utils";
 
+import { useTranslation } from "@/lib/i18n";
+
 export function TabBar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
   return (
     <nav
       aria-label="Main"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-white/5 bg-bg/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
     >
       <ul className="mx-auto grid h-[var(--tabbar-h)] max-w-lg grid-cols-4">
-        {NAV.map(({ href, label, icon: Icon }) => {
+        {NAV.map(({ href, key, label, icon: Icon }) => {
           const active = isActive(pathname, href);
           return (
             <li key={href}>
@@ -20,7 +23,7 @@ export function TabBar() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex h-full flex-col items-center justify-center gap-0.5 text-xs font-semibold transition-colors",
+                  "flex h-full flex-col items-center justify-center gap-0.5 text-xs font-semibold transition-colors duration-100 touch-manipulation",
                   active ? "text-saffron" : "text-muted",
                 )}
               >
@@ -32,7 +35,7 @@ export function TabBar() {
                 >
                   <Icon size={22} strokeWidth={active ? 2.5 : 2} />
                 </span>
-                {label}
+                {t(key, label)}
               </Link>
             </li>
           );

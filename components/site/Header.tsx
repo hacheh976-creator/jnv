@@ -7,11 +7,15 @@ import { AdminLogin } from "./AdminLogin";
 import { InstallButton } from "./InstallButton";
 import { cn } from "@/lib/utils";
 
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTranslation } from "@/lib/i18n";
+
 export function Header({ schoolName }: { schoolName: string }) {
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [login, setLogin] = useState(false);
   const taps = useRef<number[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let last = window.scrollY;
@@ -56,7 +60,7 @@ export function Header({ schoolName }: { schoolName: string }) {
           <button
             onClick={onLogoTap}
             aria-label="JNV logo"
-            className="brand-gradient grid h-11 w-11 shrink-0 place-items-center rounded-full p-[2px]"
+            className="brand-gradient grid h-11 w-11 shrink-0 place-items-center rounded-full p-[2px] transition-transform duration-75 active:scale-95 touch-manipulation"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo-160.webp" alt="" width={40} height={40} className="h-10 w-10 rounded-full bg-white" />
@@ -70,7 +74,7 @@ export function Header({ schoolName }: { schoolName: string }) {
 
           <nav aria-label="Main" className="ml-8 hidden lg:block">
             <ul className="flex gap-1">
-              {NAV.map(({ href, label, icon: Icon }) => {
+              {NAV.map(({ href, key, label, icon: Icon }) => {
                 const active = isActive(pathname, href);
                 return (
                   <li key={href}>
@@ -78,11 +82,11 @@ export function Header({ schoolName }: { schoolName: string }) {
                       href={href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex h-11 items-center gap-2 rounded-full px-4 font-semibold transition-colors",
+                        "flex h-11 items-center gap-2 rounded-full px-4 font-semibold transition-colors duration-100",
                         active ? "bg-saffron/15 text-saffron" : "text-muted hover:bg-white/5 hover:text-text",
                       )}
                     >
-                      <Icon size={20} /> {label}
+                      <Icon size={20} /> {t(key, label)}
                     </Link>
                   </li>
                 );
@@ -90,7 +94,8 @@ export function Header({ schoolName }: { schoolName: string }) {
             </ul>
           </nav>
 
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-2">
+            <LanguageSwitcher />
             <InstallButton />
           </div>
         </div>

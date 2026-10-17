@@ -41,6 +41,7 @@ html {
   background: var(--bg);
   -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
+  touch-action: manipulation;
 }
 
 body {
@@ -53,6 +54,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
   text-rendering: optimizeSpeed;
+  touch-action: manipulation;
+}
+
+/* Eliminate 300ms mobile touch delay on interactive elements for instant 60-120fps feedback */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .font-display {

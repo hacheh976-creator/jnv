@@ -39,7 +39,7 @@ export function classLabel(c: number | null | undefined) {
 }
 
 /** "Mawia" + 8 → "Mawia · Class 8" */
-export function byline(creators: string, cls: number | null | undefined) {
+export function byline(creators?: string | null, cls?: number | null | undefined) {
   return [creators, classLabel(cls)].filter(Boolean).join(" · ");
 }
 
