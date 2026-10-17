@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, Music2 } from "lucide-react";
+import { Music2 } from "lucide-react";
+import { AlbumBackLink, AlbumTrackCount } from "@/components/music/AlbumBackLink";
 import { PlayAllButtons, TrackList } from "@/components/music/TrackList";
 import { Chip } from "@/components/site/Chip";
 import { getAlbumPage } from "@/lib/queries";
@@ -9,7 +9,7 @@ import { getAlbumPage } from "@/lib/queries";
 export async function generateMetadata({ params }: PageProps<"/music/[album]">): Promise<Metadata> {
   const { album } = await params;
   const data = await getAlbumPage(album);
-  return { title: data ? `${data.album.name} hla` : "Hla" };
+  return { title: data ? `${data.album.name}` : "Music" };
 }
 
 export default async function AlbumPage({ params, searchParams }: PageProps<"/music/[album]">) {
@@ -28,9 +28,7 @@ export default async function AlbumPage({ params, searchParams }: PageProps<"/mu
         className="relative overflow-hidden px-4 pb-6 pt-4"
         style={{ background: `linear-gradient(180deg, ${album.accent_color}55 0%, transparent 100%)` }}
       >
-        <Link href="/music" className="mb-4 inline-flex h-10 items-center gap-1 rounded-full bg-black/30 pl-2 pr-4 text-sm font-semibold backdrop-blur">
-          <ChevronLeft size={20} /> Hla
-        </Link>
+        <AlbumBackLink />
         <div className="flex items-end gap-5">
           <div
             className="grid h-32 w-32 shrink-0 place-items-center overflow-hidden rounded-3xl shadow-2xl shadow-black/50 sm:h-44 sm:w-44"
@@ -46,7 +44,7 @@ export default async function AlbumPage({ params, searchParams }: PageProps<"/mu
           <div className="min-w-0 pb-1">
             <p className="text-xs font-bold uppercase tracking-widest text-white/70">Album</p>
             <h1 className="font-display text-5xl font-extrabold leading-none sm:text-6xl">{album.name}</h1>
-            <p className="mt-2 text-sm text-white/75">{tracks.length} hla</p>
+            <AlbumTrackCount count={tracks.length} />
           </div>
         </div>
         <div className="mt-5">

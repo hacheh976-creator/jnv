@@ -27,6 +27,36 @@ export const translations = {
     miz: "App Install rawh",
     hi: "ऐप इंस्टॉल करें",
   },
+  downloadApp: {
+    en: "Download App",
+    miz: "App download rawh",
+    hi: "ऐप डाउनलोड करें",
+  },
+  downloadAppShort: {
+    en: "App",
+    miz: "App",
+    hi: "ऐप",
+  },
+  installAppCardDesc: {
+    en: "Add to home screen, play anytime like an app",
+    miz: "Phone home screen-ah dah la, app angin hmang rawh",
+    hi: "फ़ोन होम स्क्रीन पर जोड़ें, ऐप की तरह उपयोग करें",
+  },
+  installIosTitle: {
+    en: "How to install on iPhone",
+    miz: "iPhone-ah dah dan",
+    hi: "iPhone पर कैसे इंस्टॉल करें",
+  },
+  installIosStep1: {
+    en: "Tap the Share button at the bottom of Safari",
+    miz: "Safari hnuai lama Share button hmet rawh",
+    hi: "सफ़ारी के नीचे शेयर बटन दबाएं",
+  },
+  installIosStep2: {
+    en: "Tap 'Add to Home Screen'",
+    miz: "Add to Home Screen hmet rawh",
+    hi: "'होम स्क्रीन पर जोड़ें' दबाएं",
+  },
 
   // Hero Section
   playGames: {
@@ -187,10 +217,118 @@ export const translations = {
     miz: "Game, hla, naupang hming zawng rawh...",
     hi: "गेम्स, गाने, छात्र खोजें...",
   },
+  searchQueryPlaceholder: {
+    en: "Game or song name...",
+    miz: "Game emaw hla hming...",
+    hi: "गेम या गाना खोजें...",
+  },
+  searchQueryBtn: {
+    en: "Search",
+    miz: "Zawng",
+    hi: "खोजें",
+  },
+  searchNotFound: {
+    en: "No results found for",
+    miz: "hi kan hmu lo. Thumal dang hmang rawh.",
+    hi: "के लिए कोई परिणाम नहीं मिला। कृपया दूसरा शब्द आज़माएँ।",
+  },
   all: {
     en: "All",
     miz: "Zawng zawng",
     hi: "सभी",
+  },
+
+  // Games page
+  gamesSubtitle: {
+    en: "Student-made games — tap and play!",
+    miz: "Kan naupangte siam game — hmet la, khel rawh!",
+    hi: "छात्रों द्वारा बनाए गए खेल — खेलें और आनंद लें!",
+  },
+  allClasses: {
+    en: "All Classes",
+    miz: "Class zawng zawng",
+    hi: "सभी कक्षाएं",
+  },
+  noGamesFilter: {
+    en: "No games found here. Try another filter.",
+    miz: "Hetah hian game a la awm lo. Filter dang thlang rawh.",
+    hi: "यहाँ कोई गेम नहीं मिला। कोई अन्य फ़िल्टर चुनें।",
+  },
+
+  // Music page
+  musicSubtitle: {
+    en: "Student-composed songs powered by AI — listen now!",
+    miz: "Kan naupangte phuah hla — Gemini hmangin",
+    hi: "छात्रों द्वारा लिखे गए गाने — एआई द्वारा संचालित",
+  },
+  songsCount: {
+    en: "songs",
+    miz: "hla",
+    hi: "गाने",
+  },
+  playAll: {
+    en: "Play all",
+    miz: "Play all",
+    hi: "सभी बजाएं",
+  },
+  shuffle: {
+    en: "Shuffle",
+    miz: "Shuffle",
+    hi: "शफ़ल",
+  },
+  noTracksAvailable: {
+    en: "No songs available yet. Check back soon!",
+    miz: "Hla a la awm lo. A hun hnaiah lo en leh rawh!",
+    hi: "अभी कोई गाना उपलब्ध नहीं है। जल्द ही देखें!",
+  },
+
+  // Player
+  expandPlayer: {
+    en: "Expand player",
+    miz: "Player lian en rawh",
+    hi: "प्लेयर बड़ा करें",
+  },
+  nextTrack: {
+    en: "Next track",
+    miz: "A dawt leh",
+    hi: "अगला गाना",
+  },
+  songTab: {
+    en: "Song",
+    miz: "Hla",
+    hi: "गाना",
+  },
+  lyricsTab: {
+    en: "Lyrics",
+    miz: "Lyrics",
+    hi: "गीत के बोल",
+  },
+  noLyrics: {
+    en: "No lyrics available.",
+    miz: "Lyrics a la awm lo.",
+    hi: "गीत के बोल उपलब्ध नहीं हैं।",
+  },
+
+  // Error & Common
+  errorTitle: {
+    en: "Something went wrong",
+    miz: "Diklo a awm tlat mai",
+    hi: "कुछ गलत हो गया",
+  },
+  errorDesc: {
+    en: "Check your internet connection and try again",
+    miz: "Internet en la, thar thawh leh rawh",
+    hi: "अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें",
+  },
+  retry: {
+    en: "Try again",
+    miz: "Thar thawh leh rawh",
+    hi: "पुनः प्रयास करें",
+  },
+  heroTagline: {
+    en: "Student-made games & AI songs",
+    miz: "Kan naupangte siam game leh hla",
+    hi: "छात्रों द्वारा बनाए गए गेम्स और एआई गाने",
   },
 
   // Language names

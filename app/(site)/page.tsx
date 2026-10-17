@@ -5,6 +5,8 @@ import { AlbumCard } from "@/components/music/AlbumCard";
 import { TrackList } from "@/components/music/TrackList";
 import { InstallButton } from "@/components/site/InstallButton";
 import { HeroButtons } from "@/components/site/HeroButtons";
+import { HeroTagline } from "@/components/site/HeroTagline";
+import { GameEmptyRow } from "@/components/game/GameEmptyRow";
 import { DemoBanner, Section } from "@/components/site/Section";
 import {
   getAlbumTrackCounts,
@@ -35,9 +37,7 @@ export default async function Home() {
           <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] sm:text-7xl">
             JNV <span className="brand-text">Studio</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-md text-base font-medium text-white/85 drop-shadow sm:text-lg">
-            {settings.tagline}
-          </p>
+          <HeroTagline defaultTagline={settings.tagline} />
           <p className="mt-1 text-sm text-white/60 drop-shadow">{settings.school_name}</p>
           <HeroButtons />
         </div>
@@ -78,7 +78,7 @@ export default async function Home() {
 
 function GameRow({ games }: { games: Parameters<typeof GameCard>[0]["game"][] }) {
   if (!games.length) {
-    return <p className="rounded-3xl bg-surface p-8 text-center text-muted">Game a la awm lo. A hun hnaiah lo en leh rawh!</p>;
+    return <GameEmptyRow />;
   }
   return (
     <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 pt-3">

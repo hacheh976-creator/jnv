@@ -17,6 +17,7 @@ import { Cover } from "@/components/ui/Cover";
 import { likeTrack, recordTrackPlay } from "@/lib/actions/public";
 import { hasLiked, rememberLike } from "@/lib/likes";
 import { byline, cn, formatDuration, isDevanagari } from "@/lib/utils";
+import { useTranslation } from "@/lib/i18n";
 
 export function Player() {
   const audio = useRef<HTMLAudioElement | null>(null);
@@ -24,6 +25,7 @@ export function Player() {
   const listened = useRef(0);
   const switching = useRef(false);
   const s = usePlayer();
+  const { t } = useTranslation();
   const track = s.queue[s.index] ?? null;
   const isPlaying = s.isPlaying;
   const [time, setTime] = useState(0);
@@ -141,7 +143,7 @@ export function Player() {
             <button
               onClick={() => s.setExpanded(true)}
               className="flex min-w-0 flex-1 items-center gap-3 pl-2 text-left"
-              aria-label="Player lian en rawh"
+              aria-label={t("expandPlayer", "Expand player")}
             >
               <span className="h-12 w-12 shrink-0 overflow-hidden rounded-xl">
                 <Cover src={track.cover_sm_url} alt="" accent="#f7931e" kind="music" />
@@ -160,7 +162,7 @@ export function Player() {
             >
               <PlayIcon size={22} fill="currentColor" />
             </button>
-            <button onClick={() => s.next()} aria-label="A dawt leh" className="grid h-12 w-12 place-items-center rounded-full">
+            <button onClick={() => s.next()} aria-label={t("nextTrack", "Next track")} className="grid h-12 w-12 place-items-center rounded-full">
               <SkipForward size={22} fill="currentColor" />
             </button>
           </div>
@@ -175,15 +177,15 @@ export function Player() {
           />
           <div className="relative mx-auto flex w-full max-w-md flex-1 flex-col px-6 pb-[max(24px,env(safe-area-inset-bottom))] pt-[max(16px,env(safe-area-inset-top))]">
             <div className="flex items-center justify-between">
-              <button onClick={() => s.setExpanded(false)} aria-label="Khar rawh" className="grid h-12 w-12 place-items-center rounded-full bg-white/10">
+              <button onClick={() => s.setExpanded(false)} aria-label={t("close", "Close")} className="grid h-12 w-12 place-items-center rounded-full bg-white/10">
                 <ChevronDown size={26} />
               </button>
               <div className="flex rounded-full bg-white/10 p-1 text-sm font-semibold">
                 <button onClick={() => setTab("cover")} className={cn("rounded-full px-4 py-2", tab === "cover" && "bg-white text-black")}>
-                  Hla
+                  {t("songTab", "Song")}
                 </button>
                 <button onClick={() => setTab("lyrics")} className={cn("flex items-center gap-1 rounded-full px-4 py-2", tab === "lyrics" && "bg-white text-black")}>
-                  <ListMusic size={16} /> Lyrics
+                  <ListMusic size={16} /> {t("lyricsTab", "Lyrics")}
                 </button>
               </div>
               <div className="w-12" />
@@ -196,7 +198,7 @@ export function Player() {
                 </div>
               ) : (
                 <div className={cn("h-full max-h-[50dvh] overflow-y-auto whitespace-pre-line rounded-3xl bg-white/5 p-5 text-lg leading-relaxed", isDevanagari(track.lyrics) && "font-display")}>
-                  {track.lyrics || "Lyrics a la awm lo."}
+                  {track.lyrics || t("noLyrics", "No lyrics available.")}
                 </div>
               )}
             </div>

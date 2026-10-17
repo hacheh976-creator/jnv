@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Download, Share, SquarePlus } from "lucide-react";
 import { Sheet } from "@/components/ui/Sheet";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/lib/i18n";
 
 type BIPEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
 
@@ -32,6 +33,7 @@ export function InstallButton({ variant = "pill" }: { variant?: "pill" | "card" 
   const [ios, setIos] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [help, setHelp] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const sync = () => setCanPrompt(Boolean(deferred));
@@ -65,38 +67,38 @@ export function InstallButton({ variant = "pill" }: { variant?: "pill" | "card" 
       {variant === "pill" ? (
         <button
           onClick={onClick}
-          className="flex h-10 items-center gap-1.5 rounded-full bg-saffron px-4 text-sm font-bold text-black hover:brightness-110"
+          className="flex h-10 items-center gap-1.5 rounded-full bg-saffron px-4 text-sm font-bold text-black transition-transform duration-75 hover:brightness-110 active:scale-95 touch-manipulation"
         >
-          <Download size={18} /> <span className="hidden sm:inline">App download rawh</span>
-          <span className="sm:hidden">App</span>
+          <Download size={18} /> <span className="hidden sm:inline">{t("downloadApp", "Download App")}</span>
+          <span className="sm:hidden">{t("downloadAppShort", "App")}</span>
         </button>
       ) : (
         <button
           onClick={onClick}
           className={cn(
-            "flex w-full items-center gap-4 rounded-3xl border border-saffron/30 bg-gradient-to-r from-saffron/20 to-transparent p-4 text-left",
+            "flex w-full items-center gap-4 rounded-3xl border border-saffron/30 bg-gradient-to-r from-saffron/20 to-transparent p-4 text-left transition-transform duration-75 active:scale-[0.99] touch-manipulation",
           )}
         >
           <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-saffron text-black">
             <Download size={24} />
           </span>
           <span>
-            <span className="block font-display text-lg font-bold">App download rawh</span>
-            <span className="block text-sm text-muted">Phone home screen-ah dah la, app angin hmang rawh</span>
+            <span className="block font-display text-lg font-bold">{t("downloadApp", "Download App")}</span>
+            <span className="block text-sm text-muted">{t("installAppCardDesc", "Add to phone home screen, play anytime like an app")}</span>
           </span>
         </button>
       )}
-      <Sheet open={help} onClose={() => setHelp(false)} label="iPhone-ah install dan">
+      <Sheet open={help} onClose={() => setHelp(false)} label={t("installIosTitle", "How to install on iPhone")}>
         <div className="p-6 pt-10">
-          <h2 className="font-display text-2xl font-bold">iPhone-ah dah dan</h2>
+          <h2 className="font-display text-2xl font-bold">{t("installIosTitle", "How to install on iPhone")}</h2>
           <ol className="mt-5 space-y-4 text-lg">
             <li className="flex items-center gap-3">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-surface-2"><Share /></span>
-              Safari hnuai lama <b>Share</b> button hmet rawh
+              {t("installIosStep1", "Tap the Share button at the bottom of Safari")}
             </li>
             <li className="flex items-center gap-3">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-surface-2"><SquarePlus /></span>
-              <b>Add to Home Screen</b> hmet rawh
+              {t("installIosStep2", "Tap 'Add to Home Screen'")}
             </li>
           </ol>
         </div>

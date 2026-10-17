@@ -41,10 +41,24 @@ export function Section({
 }
 
 export function DemoBanner() {
+  const { lang } = useTranslation();
+  if (lang === "hi") {
+    return (
+      <div className="mx-4 mt-4 rounded-2xl border border-yellow/30 bg-yellow/10 p-4 text-sm text-yellow">
+        <b>डेमो मोड:</b> Supabase अभी कनेक्ट नहीं है। ये खेल और गाने केवल उदाहरण हैं।
+      </div>
+    );
+  }
+  if (lang === "miz") {
+    return (
+      <div className="mx-4 mt-4 rounded-2xl border border-yellow/30 bg-yellow/10 p-4 text-sm text-yellow">
+        <b>Demo mode:</b> Supabase la connect lo a ni. Heng game leh hla te hi entirna chauh an ni.
+      </div>
+    );
+  }
   return (
     <div className="mx-4 mt-4 rounded-2xl border border-yellow/30 bg-yellow/10 p-4 text-sm text-yellow">
-      <b>Demo mode:</b> Supabase la connect lo a ni. Heng game leh hla te hi entirna chauh an ni.
-      <code className="ml-1">.env.local</code> ah key dah rawh.
+      <b>Demo mode:</b> Supabase is not connected yet. These sample games and songs are for demonstration.
     </div>
   );
 }

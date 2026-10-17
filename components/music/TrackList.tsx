@@ -5,25 +5,28 @@ import { Cover } from "@/components/ui/Cover";
 import type { Track } from "@/lib/types";
 import { byline, cn, formatDuration, isDevanagari } from "@/lib/utils";
 
+import { useTranslation } from "@/lib/i18n";
+
 export function PlayAllButtons({ tracks, accent }: { tracks: Track[]; accent: string }) {
   const playQueue = usePlayer((s) => s.playQueue);
+  const { t } = useTranslation();
   const disabled = !tracks.some((t) => t.audio_url);
   return (
     <div className="flex gap-3">
       <button
         disabled={disabled}
         onClick={() => playQueue(tracks, 0, { shuffle: false })}
-        className="flex h-12 items-center gap-2 rounded-full bg-saffron px-6 font-bold text-black disabled:opacity-40"
+        className="flex h-12 items-center gap-2 rounded-full bg-saffron px-6 font-bold text-black transition-transform duration-75 active:scale-95 disabled:opacity-40 touch-manipulation"
       >
-        <Play size={20} fill="currentColor" /> Play all
+        <Play size={20} fill="currentColor" /> {t("playAll", "Play all")}
       </button>
       <button
         disabled={disabled}
         onClick={() => playQueue(tracks, 0, { shuffle: true })}
-        className="flex h-12 items-center gap-2 rounded-full border px-5 font-bold disabled:opacity-40"
+        className="flex h-12 items-center gap-2 rounded-full border px-5 font-bold transition-transform duration-75 active:scale-95 disabled:opacity-40 touch-manipulation"
         style={{ borderColor: accent }}
       >
-        <Shuffle size={20} /> Shuffle
+        <Shuffle size={20} /> {t("shuffle", "Shuffle")}
       </button>
     </div>
   );
@@ -31,10 +34,15 @@ export function PlayAllButtons({ tracks, accent }: { tracks: Track[]; accent: st
 
 export function TrackList({ tracks, albumCover }: { tracks: Track[]; albumCover?: string | null }) {
   const { playQueue, queue, index, isPlaying, toggle } = usePlayer();
+  const { t } = useTranslation();
   const currentId = queue[index]?.id;
 
   if (!tracks.length) {
-    return <p className="rounded-3xl bg-surface p-8 text-center text-muted">Hla a la awm lo. A hun hnaiah lo en leh rawh!</p>;
+    return (
+      <p className="rounded-3xl bg-surface p-8 text-center text-muted">
+        {t("noTracksAvailable", "No songs available yet. Check back soon!")}
+      </p>
+    );
   }
 
   return (
